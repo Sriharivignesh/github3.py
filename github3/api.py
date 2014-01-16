@@ -131,7 +131,7 @@ def gitignore_templates():
     return gh.gitignore_templates()
 
 
-def iter_all_repos(number=-1, etag=None):
+def all_repos(number=-1, etag=None):
     """Iterate over every repository in the order they were created.
 
     :param int number: (optional), number of repositories to return.
@@ -144,7 +144,7 @@ def iter_all_repos(number=-1, etag=None):
     return gh.iter_all_repos(number, etag)
 
 
-def iter_all_users(number=-1, etag=None):
+def all_users(number=-1, etag=None):
     """Iterate over every user in the order they signed up for GitHub.
 
     :param int number: (optional), number of users to return. Default: -1,
@@ -157,7 +157,7 @@ def iter_all_users(number=-1, etag=None):
     return gh.iter_all_users(number, etag)
 
 
-def iter_events(number=-1, etag=None):
+def events(number=-1, etag=None):
     """Iterate over public events.
 
     :param int number: (optional), number of events to return. Default: -1
@@ -170,7 +170,7 @@ def iter_events(number=-1, etag=None):
     return gh.iter_events(number, etag)
 
 
-def iter_followers(username, number=-1, etag=None):
+def followers(username, number=-1, etag=None):
     """List the followers of ``username``.
 
     :param str username: (required), login of the person to list the followers
@@ -185,7 +185,7 @@ def iter_followers(username, number=-1, etag=None):
     return gh.iter_followers(username, number, etag) if username else []
 
 
-def iter_following(username, number=-1, etag=None):
+def following(username, number=-1, etag=None):
     """List the people ``username`` follows.
 
     :param str username: (required), login of the user
@@ -199,7 +199,7 @@ def iter_following(username, number=-1, etag=None):
     return gh.iter_following(username, number, etag) if username else []
 
 
-def iter_gists(username=None, number=-1, etag=None):
+def gists(username=None, number=-1, etag=None):
     """Iterate over public gists or gists for the provided username.
 
     :param str username: (optional), if provided, get the gists for this user
@@ -214,16 +214,10 @@ def iter_gists(username=None, number=-1, etag=None):
     return gh.iter_gists(username, number, etag)
 
 
-def iter_repo_issues(owner, repository, milestone=None, state=None,
-                     assignee=None, mentioned=None, labels=None, sort=None,
-                     direction=None, since=None, number=-1, etag=None):
-    """List issues on owner/repository. Only owner and repository are
-    required.
-
-    .. versionchanged:: 0.9.0
-
-        - The ``state`` parameter now accepts 'all' in addition to 'open'
-          and 'closed'.
+def repo_issues(owner, repository, milestone=None, state=None, assignee=None,
+                mentioned=None, labels=None, sort=None, direction=None,
+                since=None, number=-1, etag=None):
+    """Iterate over issues on owner/repository.
 
     :param str owner: login of the owner of the repository
     :param str repository: name of the repository
@@ -256,7 +250,7 @@ def iter_repo_issues(owner, repository, milestone=None, state=None,
     return iter([])
 
 
-def iter_orgs(username, number=-1, etag=None):
+def orgs(username, number=-1, etag=None):
     """List the organizations associated with ``username``.
 
     :param str username: (required), login of the user
@@ -271,8 +265,8 @@ def iter_orgs(username, number=-1, etag=None):
     return gh.iter_orgs(username, number, etag) if username else []
 
 
-def iter_user_repos(login, type=None, sort=None, direction=None, number=-1,
-                    etag=None):
+def user_repos(login, type=None, sort=None, direction=None, number=-1,
+               etag=None):
     """List public repositories for the specified ``login``.
 
     .. versionadded:: 0.6
@@ -302,7 +296,7 @@ def iter_user_repos(login, type=None, sort=None, direction=None, number=-1,
     return iter([])
 
 
-def iter_starred(username, number=-1, etag=None):
+def starred(username, number=-1, etag=None):
     """Iterate over repositories starred by ``username``.
 
     :param str username: (optional), name of user whose stars you want to see
@@ -316,7 +310,7 @@ def iter_starred(username, number=-1, etag=None):
     return gh.iter_starred(username, number, etag)
 
 
-def iter_subscriptions(username, number=-1, etag=None):
+def subscriptions(username, number=-1, etag=None):
     """Iterate over repositories subscribed to by ``username``.
 
     :param str username: (optional), name of user whose subscriptions you want
