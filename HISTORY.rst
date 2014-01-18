@@ -1,96 +1,58 @@
 History/Changelog
 -----------------
 
-0.9.3: 2014-11-04
+1.0.0: 2014-xx-xx
 ~~~~~~~~~~~~~~~~~
 
-- Backport of ``PullRequest#create_review_comment`` by Adrian Moisey
+1.0.0 is a huge release. It includes a great deal of changes to 
+``github3.py``.  It is suggested you read the following release notes *very* 
+carefully.
 
-- Backport of ``PullRequest#review_comments`` by Adrian Moisey
+Breaking Changes
+````````````````
 
-- Backport of a fix that allows authenticated users to download Release
-  Assets. Original bug reported by Eugene Fidelin in issue #288.
+- All methods and functions starting with ``iter_`` have been renamed.
 
-- Documentation typo fix by Marc Abramowitz
+    ==============================     =========================
+    Old name                           New name
+    ==============================     =========================
+    ``github3.iter_all_repos``         ``github3.all_repos``
+    ``github3.iter_all_users``         ``github3.all_users``
+    ``github3.iter_events``            ``github3.events``
+    ``github3.iter_followers``         ``github3.followers``
+    ``github3.iter_following``         ``github3.following``
+    ``github3.iter_gists``             ``github3.gists``
+    ``github3.iter_repo_issues``       ``github3.repo_issues``
+    ``github3.iter_orgs``              ``github3.orgs``
+    ``github3.iter_user_repos``        ``github3.user_repos``
+    ``github3.iter_starred``           ``github3.starred``
+    ``github3.iter_subscriptions``     ``github3.subscriptions``
+    ``github3.iter_subscriptions``     ``github3.subscriptions``
+    ==============================     =========================
 
-0.9.2: 2014-10-05
-~~~~~~~~~~~~~~~~~
+- ``github3.login`` has been simplified and split into two functions:
 
-- Updates for `new team management`_ API changes
+  - ``github3.login`` serves the majority use case and only provides an 
+    authenticated ``GitHub`` object.
 
-  - Add ``Team#invite``, ``Team#membership_for``, and
-    ``Team#revoke_membership``
+  - ``github3.enterprise_login`` allows GitHub Enterprise users to log into 
+    their service.
 
-  - Deprecate ``Team#add_member``, ``Team#remove_member``, and
-    ``Organization#add_member``.
+- Remove legacy watching API:
 
-  - Update payload handler for ``TeamAddEvent``.
+  - ``GitHub#subscribe``
 
-.. _new team management:
-    https://developer.github.com/changes/2014-09-23-one-more-week-before-the-add-team-member-api-breaking-change/
+  - ``GitHub#unsubscribe``
 
-0.9.1: 2014-08-10
-~~~~~~~~~~~~~~~~~
+  - ``GitHub#is_subscribed``
 
-- Correct Repository attribute ``fork_count`` should be ``forks_count``
+- ``Repository#set_subscription`` was split into two simpler functions
 
-0.9.0: 2014-05-04
-~~~~~~~~~~~~~~~~~
+  - ``Repository#subscribe`` subscribes the authenticated user to the 
+    repository's notifications
 
-- Add Deployments API
-
-- Add Pages API
-
-- Add support so applications can revoke a `single authorization`_ or `all
-  authorizations`_ created by the application
-
-- Add the ability for users to ping_ hooks
-
-- Allow users to list a `Repository's collaborators`_
-
-- Allow users to create an empty blob on a Repository
-
-- Update how users can list issues and pull requests. See:
-  http://developer.github.com/changes/2014-02-28-issue-and-pull-query-enhancements/
-  This includes breaking changes to ``Repository#iter_pulls``.
-
-- Update methods to handle the `pagination changes`_.
-
-- Fix typo `stargarzers_url`_
-
-- Add ``assets`` attribute to ``Release`` object.
-
-- Fix wrong argument to ``Organization#create_team`` (``permissions`` versus 
-  ``permission``)
-
-- Fix Issue Search Result's representation and initialization
-
-- Fix Repository Search Result's initialization
-
-- Allow users to pass a two-factor authentication callback to 
-  ``GitHub#authorize``.
-
-.. _single authorization: https://github3py.readthedocs.org/en/latest/github.html#github3.github.GitHub.revoke_authorization
-.. _all authorizations: https://github3py.readthedocs.org/en/latest/github.html#github3.github.GitHub.revoke_authorizations
-.. _ping: https://github3py.readthedocs.org/en/latest/repos.html?highlight=ping#github3.repos.hook.Hook.ping
-.. _Repository's collaborators: https://github3py.readthedocs.org/en/latest/repos.html#github3.repos.repo.Repository.iter_collaborators
-.. _pagination changes: https://developer.github.com/changes/2014-03-18-paginating-method-changes/
-.. _stargarzers_url: https://github.com/sigmavirus24/github3.py/pull/240
-
-0.8.2: 2014-02-11
-~~~~~~~~~~~~~~~~~
-
-- Fix bug in ``GitHub#search_users`` (and ``github3.search_users``). Thanks
-  @abesto
-
-- Expose the stargazers count for repositories. Thanks @seveas
-
-0.8.1: 2014-01-26
-~~~~~~~~~~~~~~~~~
-
-- Add documentation for using Two Factor Authentication
-
-- Fix oversight where ``github3.login`` could not be used for 2FA
+  - ``Repository#ignore`` ignores notifications from the repository for the 
+    authenticated user
 
 0.8.0: 2014-01-03
 ~~~~~~~~~~~~~~~~~
