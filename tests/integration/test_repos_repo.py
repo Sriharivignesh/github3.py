@@ -41,23 +41,16 @@ class TestRepository(IntegrationHelper):
 
         assert isinstance(release, github3.repos.release.Release)
 
-    def test_iter_deployments(self):
-        """Test that a repository's deployments may be retrieved."""
-        cassette_name = self.cassette_name('iter_deployments')
+    def test_ignore(self):
+        """Test that a user can ignore the notifications on a repository."""
+        self.basic_login()
+        cassette_name = self.cassette_name('ignore')
         with self.recorder.use_cassette(cassette_name):
-            repository = self.gh.repository('sigmavirus24', 'github3.py')
+            repository = self.gh.repository('jnewland',
+                                            'gmond_python_modules')
             assert repository is not None
-            for d in repository.iter_deployments():
-                assert isinstance(d, github3.repos.deployment.Deployment)
-
-    def test_iter_issues_accepts_state_all(self):
-        """Test that the state parameter accets 'all'."""
-        cassette_name = self.cassette_name('issues_state_all')
-        with self.recorder.use_cassette(cassette_name):
-            repository = self.gh.repository('sigmavirus24', 'betamax')
-            assert repository is not None
-            for issue in repository.iter_issues(state='all'):
-                assert issue.state in ('open', 'closed')
+            subscription = repository.ignore()
+            assert subscription.ignore is True
 
     def test_iter_languages(self):
         """Test that a repository's languages can be retrieved."""
@@ -112,3 +105,13 @@ class TestRepository(IntegrationHelper):
             release = repository.release(76677)
 
         assert isinstance(release, github3.repos.release.Release)
+
+    def test_subscription(self):
+        """Test the ability to subscribe to a repository's notifications."""
+        self.basic_login()
+        cassette_name = self.cassette_name('subscription')
+        with self.recorder.use_cassette(cassette_name):
+            repository = self.gh.repository('vcr', 'vcr')
+            assert repository is not None
+            subscription = repository.subscribe()
+            assert subscription.subscribed is True
