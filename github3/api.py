@@ -141,7 +141,7 @@ def all_repos(number=-1, etag=None):
     :returns: generator of :class:`Repository <github3.repos.Repository>`
 
     """
-    return gh.iter_all_repos(number, etag)
+    return gh.all_repos(number, etag)
 
 
 def all_users(number=-1, etag=None):
@@ -154,7 +154,7 @@ def all_users(number=-1, etag=None):
     :returns: generator of :class:`User <github3.users.User>`
 
     """
-    return gh.iter_all_users(number, etag)
+    return gh.all_users(number, etag)
 
 
 def all_events(number=-1, etag=None):
@@ -167,7 +167,7 @@ def all_events(number=-1, etag=None):
     :returns: generator of :class:`Event <github3.events.Event>`
 
     """
-    return gh.iter_events(number, etag)
+    return gh.all_events(number, etag)
 
 
 def followers_of(username, number=-1, etag=None):
@@ -182,7 +182,7 @@ def followers_of(username, number=-1, etag=None):
     :returns: generator of :class:`User <github3.users.User>`
 
     """
-    return gh.iter_followers(username, number, etag) if username else []
+    return gh.followers_of(username, number, etag) if username else []
 
 
 def followed_by(username, number=-1, etag=None):
@@ -196,7 +196,7 @@ def followed_by(username, number=-1, etag=None):
     :returns: generator of :class:`User <github3.users.User>`
 
     """
-    return gh.iter_following(username, number, etag) if username else []
+    return gh.followed_by(username, number, etag) if username else []
 
 
 def all_gists(number=-1, etag=None):
@@ -213,7 +213,7 @@ def all_gists(number=-1, etag=None):
     :returns: generator of :class:`Gist <github3.gists.Gist>`
 
     """
-    return gh.iter_gists(None, number, etag)
+    return gh.all_gists(None, number, etag)
 
 
 def gists_for(username, number=-1, etag=None):
@@ -229,7 +229,7 @@ def gists_for(username, number=-1, etag=None):
 
     """
     if username:
-        return gh.iter_gists(username, number, etag)
+        return gh.gists_for(username, number, etag)
     return iter([])
 
 
@@ -281,7 +281,7 @@ def organizations(username, number=-1, etag=None):
         :class:`Organization <github3.orgs.Organization>`
 
     """
-    return gh.iter_orgs(username, number, etag) if username else []
+    return gh.organizations(username, number, etag) if username else []
 
 
 def user_repos(login, type=None, sort=None, direction=None, number=-1,
@@ -311,7 +311,7 @@ def user_repos(login, type=None, sort=None, direction=None, number=-1,
 
     """
     if login:
-        return gh.iter_user_repos(login, type, sort, direction, number, etag)
+        return gh.user_repos(login, type, sort, direction, number, etag)
     return iter([])
 
 
@@ -326,7 +326,7 @@ def starred(username, number=-1, etag=None):
     :returns: generator of :class:`Repository <github3.repos.Repository>`
 
     """
-    return gh.iter_starred(username, number, etag)
+    return gh.starred(username, number, etag)
 
 
 def subscriptions(username, number=-1, etag=None):
@@ -341,7 +341,7 @@ def subscriptions(username, number=-1, etag=None):
     :returns: generator of :class:`Repository <github3.repos.Repository>`
 
     """
-    return gh.iter_subscriptions(username, number, etag)
+    return gh.subscriptions(username, number, etag)
 
 
 def create_gist(description, files):
