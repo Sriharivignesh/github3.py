@@ -1,6 +1,10 @@
 from github3.github import GitHub
 
-from .helper import UnitHelper
+from .helper import UnitHelper, UnitIteratorHelper
+
+
+def url_for(path=''):
+    return 'https://api.github.com/' + path.strip('/')
 
 
 class TestGitHub(UnitHelper):
@@ -16,40 +20,33 @@ class TestGitHub(UnitHelper):
         self.instance.login(token='token')
 
 
-class TestGitHubAuthorizations(UnitHelper):
+class TestGitHubIterators(UnitIteratorHelper):
     described_class = GitHub
     example_data = None
 
-    def create_session_mock(self, *args):
-        session = super(TestGitHubAuthorizations,
-                        self).create_session_mock(*args)
-        session.retrieve_client_credentials.return_value = ('id', 'secret')
-        return session
+    def test_user_repos(self):
+        """Test that one can iterate over a user's repositories."""
+        i = self.instance.user_repos('sigmavirus24')
 
-    def test_revoke_authorization(self):
-        """Test that GitHub#revoke_authorization calls the expected methods.
+        # Get the next item from the iterator
+        self.get_next(i)
 
-        It should use the session's delete and temporary_basic_auth methods.
+        self.session.get.assert_called_once_with(
+            url_for('users/sigmavirus24/repos'),
+            params={'per_page': 100},
+            headers={}
+        )
+
+    def test_user_repos_with_type(self):
         """
-        self.instance.revoke_authorization('access_token')
-        self.session.delete.assert_called_once_with(
-            'https://api.github.com/applications/id/tokens/access_token',
-            params={'client_id': None, 'client_secret': None}
-        )
-        self.session.temporary_basic_auth.assert_called_once_with(
-            'id', 'secret'
-        )
-
-    def test_revoke_authorizations(self):
-        """Test that GitHub#revoke_authorizations calls the expected methods.
-
-        It should use the session's delete and temporary_basic_auth methods.
+        Test that one can iterate over a user's repositories with a type.
         """
-        self.instance.revoke_authorizations()
-        self.session.delete.assert_called_once_with(
-            'https://api.github.com/applications/id/tokens',
-            params={'client_id': None, 'client_secret': None}
-        )
-        self.session.temporary_basic_auth.assert_called_once_with(
-            'id', 'secret'
+        i = self.instance.user_repos('sigmavirus24', 'all')
+
+        self.get_next(i)
+
+        self.session.get.assert_called_once_with(
+            url_for('users/sigmavirus24/repos'),
+            params={'per_page': 100, 'type': 'all'},
+            headers={}
         )
