@@ -8,20 +8,20 @@ This module contains the main GitHub session object.
 """
 from __future__ import unicode_literals
 
-from .auths import Authorization
-from .decorators import (requires_auth, requires_basic_auth,
-                         requires_app_credentials)
-from .events import Event
-from .gists import Gist
-from .issues import Issue, issue_params
-from .models import GitHubCore
-from .orgs import Membership, Organization, Team
-from .repos import Repository
-from .search import (CodeSearchResult, IssueSearchResult,
-                     RepositorySearchResult, UserSearchResult)
-from .structs import SearchIterator
-from .users import User, Key
-from .notifications import Thread
+from github3.auths import Authorization
+from github3.decorators import (requires_auth, requires_basic_auth,
+                                requires_app_credentials)
+from github3.events import Event
+from github3.gists import Gist
+from github3.issues import Issue, issue_params
+from github3.models import GitHubCore
+from github3.orgs import Organization, Team
+from github3.repos import Repository, repo_issue_params
+from github3.search import (CodeSearchResult, IssueSearchResult,
+                            RepositorySearchResult, UserSearchResult)
+from github3.structs import SearchIterator
+from github3.users import User, Key
+from github3.notifications import Thread
 from uritemplate import URITemplate
 
 
@@ -707,10 +707,10 @@ class GitHub(GitHubCore):
         params.update(per_page=per_page)
         return self._iter(int(number), url, Issue, params, etag)
 
-    def repo_issues(self, owner, repository, milestone=None,
-                    state=None, assignee=None, mentioned=None,
-                    labels=None, sort=None, direction=None, since=None,
-                    number=-1, etag=None):
+    def repository_issues(self, owner, repository, milestone=None,
+                          state=None, assignee=None, mentioned=None,
+                          labels=None, sort=None, direction=None, since=None,
+                          number=-1, etag=None):
         """List issues on owner/repository. Only owner and repository are
         required.
 
@@ -743,10 +743,12 @@ class GitHub(GitHubCore):
         :returns: generator of :class:`Issue <github3.issues.Issue>`\ s
         """
         if owner and repository:
-            repo = self.repository(owner, repository)
-            return repo.iter_issues(milestone, state, assignee, mentioned,
-                                    labels, sort, direction, since, number,
-                                    etag)
+            url = self._build_url('repos', owner, repository, 'issues')
+
+            params = repo_issue_params(milestone, state, assignee, mentioned,
+                                       labels, sort, direction, since)
+            return self._iter(int(number), url, Issue, params=params,
+                              etag=etag)
         return iter([])
 
     @requires_auth
