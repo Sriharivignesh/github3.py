@@ -11,7 +11,3 @@ class TestAPI(TestCase):
 
     def tearDown(self):
         self.mock.stop()
-
-    def test_zen(self):
-        github3.zen()
-        assert self.gh.zen.called is True
