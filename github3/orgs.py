@@ -142,7 +142,7 @@ class Team(GitHubCore):
         url = self._build_url('members', login, base_url=self._api)
         return self._boolean(self._get(url), 204, 404)
 
-    def iter_members(self, filter=None, number=-1, etag=None):
+    def members(self, number=-1, etag=None):
         """Iterate over the members of this team.
 
         :param str filter: (optional), filter members returned by this method.
