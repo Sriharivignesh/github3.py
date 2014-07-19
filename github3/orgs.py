@@ -172,29 +172,13 @@ class Team(GitHubCore):
         return self._iter(int(number), url, Repository, etag=etag)
 
     @requires_auth
-    def membership_for(self, username):
-        """Retrieve the membership information for the user.
+    def remove_member(self, username):
+        """Remove ``username`` from this team.
 
-        :param str username: (required), name of the user
-        :returns: dictionary
-        """
-        url = self._build_url('memberships', username, base_url=self._api)
-        json = self._json(self._get(url), 200)
-        return json or {}
-
-    @requires_auth
-    def remove_member(self, login):
-        """Remove ``login`` from this team.
-
-        :param str login: (required), login of the member to remove
+        :param str username: (required), username of the member to remove
         :returns: bool
         """
-        warnings.warn(
-            'This is no longer supported by the GitHub API, see '
-            'https://developer.github.com/changes/2014-09-23-one-more-week'
-            '-before-the-add-team-member-api-breaking-change/',
-            DeprecationWarning)
-        url = self._build_url('members', login, base_url=self._api)
+        url = self._build_url('members', username, base_url=self._api)
         return self._boolean(self._delete(url), 204, 404)
 
     @requires_auth
