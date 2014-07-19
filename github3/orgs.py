@@ -63,17 +63,14 @@ class Team(GitHubCore):
         self.__init__(team, self._session)
 
     @requires_auth
-    def add_member(self, login):
-        """Add ``login`` to this team.
+    def add_member(self, username):
+        """Add ``username`` to this team.
 
+        :param str username: the username of the user you would like to add to
+            the team.
         :returns: bool
         """
-        warnings.warn(
-            'This is no longer supported by the GitHub API, see '
-            'https://developer.github.com/changes/2014-09-23-one-more-week'
-            '-before-the-add-team-member-api-breaking-change/',
-            DeprecationWarning)
-        url = self._build_url('members', login, base_url=self._api)
+        url = self._build_url('members', username, base_url=self._api)
         return self._boolean(self._put(url), 204, 404)
 
     @requires_auth
