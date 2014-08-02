@@ -2,7 +2,6 @@ import os
 import github3
 import pytest
 from github3 import repos
-from datetime import datetime
 from tests.utils import (BaseCase, load, mock)
 
 
