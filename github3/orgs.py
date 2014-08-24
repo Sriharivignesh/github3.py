@@ -60,7 +60,7 @@ class Team(GitHubCore):
         return '<Team [{0}]>'.format(self.name)
 
     def _update_(self, team):
-        self.__init__(team, self._session)
+        self.__init__(team, self.session)
 
     @requires_auth
     def add_member(self, username):
@@ -352,7 +352,7 @@ class Organization(BaseAccount):
                 'permission': permission}
         url = self._build_url('teams', base_url=self._api)
         json = self._json(self._post(url, data), 201)
-        return Team(json, self._session) if json else None
+        return Team(json, self) if json else None
 
     @requires_auth
     def edit(self, billing_email=None, company=None, email=None, location=None,
@@ -510,39 +510,4 @@ class Organization(BaseAccount):
         if int(team_id) > 0:
             url = self._build_url('teams', str(team_id))
             json = self._json(self._get(url), 200)
-        return Team(json, self._session) if json else None
-
-
-class Membership(GitHubCore):
-
-    """The wrapper for information about Team and Organization memberships."""
-
-    def __init__(self, membership, session=None):
-        super(Membership, self).__init__(membership, session)
-        self._update_attributes(membership)
-
-    def _repr(self):
-        return '<Membership [{0}]>'.format(self.organization)
-
-    def _update_attributes(self, membership):
-        self._api = membership.get('url')
-        self.organization = Organization(membership.get('organization', {}),
-                                         self)
-        self.state = membership.get('state', '')
-        self.organization_url = membership.get('organization_url')
-        self.active = self.state.lower() == 'active'
-        self.pending = self.state.lower() == 'pending'
-
-    @requires_auth
-    def edit(self, state):
-        """Edit the user's membership.
-
-        :param str state: (required), the state the membership should be in.
-            Only accepts ``"active"``.
-        :returns: itself
-        """
-        if state and state.lower() == 'active':
-            data = dumps({'state': state.lower()})
-            json = self._json(self._patch(self._api, data=data))
-            self._update_attributes(json)
-        return self
+        return Team(json, self) if json else None
