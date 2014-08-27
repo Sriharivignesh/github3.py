@@ -124,17 +124,17 @@ def _pullreqev(payload, session):
     return payload
 
 
-def _pullreqcomm(payload, session):
-    from .pulls import PullRequest, ReviewComment
+def _pullreqcomm(payload):
+    from github3.pulls import PullRequest, ReviewComment
     # Transform the Pull Request attribute
     pull = payload.get('pull_request')
     if pull:
-        payload['pull_request'] = PullRequest(pull, session)
+        payload['pull_request'] = PullRequest(pull)
 
     # Transform the Comment attribute
     comment = payload.get('comment')
     if comment:
-        payload['comment'] = ReviewComment(comment, session)
+        payload['comment'] = ReviewComment(comment, None)
     return payload
 
 
