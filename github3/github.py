@@ -1026,12 +1026,19 @@ class GitHub(GitHubCore):
         return ''  # (No coverage)
 
     @requires_auth
-    def membership_in(self, organization):
-        """Retrieve the user's membership in the specified organization."""
-        url = self._build_url('user', 'memberships', 'orgs',
-                              str(organization))
+    def me(self):
+        """Retrieves the info for the authenticated user.
+
+        .. versionadded:: 1.0
+
+            This was separated from the ``user`` method.
+
+        :returns: The representation of the authenticated user.
+        :rtype: :class:`User <github3.users.User>`
+        """
+        url = self._build_url('user')
         json = self._json(self._get(url), 200)
-        return Membership(json, self)
+        return User(json, self) if json else None
 
     def meta(self):
         """Returns a dictionary with arrays of addresses in CIDR format
@@ -1515,19 +1522,13 @@ class GitHub(GitHubCore):
         return user.update(name, email, blog, company, location, hireable,
                            bio)
 
-    def user(self, username=None):
-        """Returns a User object for the specified user name if
-        provided. If no user name is provided, this will return a User
-        object for the authenticated user.
+    def user(self, username):
+        """Returns a User object for the specified user name.
 
-        :param str username: (optional)
+        :param str username: name of the user
         :returns: :class:`User <github3.users.User>`
         """
-        if username:
-            url = self._build_url('users', username)
-        else:
-            url = self._build_url('user')
-
+        url = self._build_url('users', username)
         json = self._json(self._get(url), 200)
         return User(json, self) if json else None
 
