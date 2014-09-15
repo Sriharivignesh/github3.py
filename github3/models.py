@@ -13,11 +13,11 @@ from requests.compat import urlparse, is_py2
 from datetime import datetime
 from logging import getLogger
 
-from github3.decorators import requires_auth
-from github3.exceptions import error_for
-from github3.null import NullObject
-from github3.session import GitHubSession
-from github3.utils import UTC
+from .decorators import requires_auth
+from .exceptions import error_for
+from .null import NullObject
+from .session import GitHubSession
+from .utils import UTC
 
 __timeformat__ = '%Y-%m-%dT%H:%M:%SZ'
 __logs__ = getLogger(__package__)

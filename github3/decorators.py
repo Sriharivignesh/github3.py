@@ -37,10 +37,14 @@ def requires_auth(func):
             return func(self, *args, **kwargs)
         else:
 <<<<<<< HEAD
+<<<<<<< HEAD
             from .models import GitHubError
 =======
             from github3.exceptions import error_for
 >>>>>>> Use new error classes
+=======
+            from .exceptions import error_for
+>>>>>>> addresses #248
             # Mock a 401 response
             r = generate_fake_error_response(
                 '{"message": "Requires authentication"}'
@@ -62,10 +66,14 @@ def requires_basic_auth(func):
             return func(self, *args, **kwargs)
         else:
 <<<<<<< HEAD
+<<<<<<< HEAD
             from .models import GitHubError
 =======
             from github3.exceptions import error_for
 >>>>>>> Use new error classes
+=======
+            from .exceptions import error_for
+>>>>>>> addresses #248
             # Mock a 401 response
             r = generate_fake_error_response(
                 '{"message": "Requires username/password authentication"}'
@@ -88,10 +96,14 @@ def requires_app_credentials(func):
             return func(self, *args, **kwargs)
         else:
 <<<<<<< HEAD
+<<<<<<< HEAD
             from .models import GitHubError
 =======
             from github3.exceptions import error_for
 >>>>>>> Use new error classes
+=======
+            from .exceptions import error_for
+>>>>>>> addresses #248
             # Mock a 401 response
             r = generate_fake_error_response(
                 '{"message": "Requires username/password authentication"}'

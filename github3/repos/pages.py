@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from github3.models import GitHubObject
+from ..models import GitHubObject
 
 
 class PagesInfo(GitHubObject):

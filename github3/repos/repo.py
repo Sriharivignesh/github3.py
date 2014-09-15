@@ -1779,7 +1779,7 @@ class Repository(GitHubCore):
             endpoint
         :returns: generator of :class:`Team <github3.orgs.Team>`\ s
         """
-        from github3.orgs import Team
+        from ..orgs import Team
         url = self._build_url('teams', base_url=self._api)
         return self._iter(int(number), url, Team, etag=etag)
 
