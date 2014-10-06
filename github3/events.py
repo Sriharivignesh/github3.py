@@ -153,9 +153,9 @@ def _team(payload):
     if payload.get('team'):
         payload['team'] = Team(payload['team'], session)
     if payload.get('repo'):
-        payload['repo'] = Repository(payload['repo'], session)
+        payload['repo'] = Repository(payload['repo'], None)
     if payload.get('sender'):
-        payload['sender'] = User(payload['sender'], session)
+        payload['sender'] = User(payload['sender'], None)
     return payload
 
 
