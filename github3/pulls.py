@@ -371,6 +371,7 @@ class ReviewComment(BaseComment):
     """
 
     def _update_attributes(self, comment):
+        super(ReviewComment, self)._update_attributes(comment)
         #: :class:`User <github3.users.User>` who made the comment
         self.user = None
         if comment.get('user'):
@@ -414,4 +415,4 @@ class ReviewComment(BaseComment):
         json = self._json(self._post(url, data={
             'body': body, 'in_reply_to': in_reply_to
         }), 201)
-        return ReviewComment(json, self) if json else None
+        return self._instance_or_null(ReviewComment, json)
