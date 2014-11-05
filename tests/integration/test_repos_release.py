@@ -82,11 +82,11 @@ class TestAsset(IntegrationHelper):
                                         preserve_exact_body_bytes=True):
             repository = self.gh.repository('sigmavirus24', 'github3.py')
             release = repository.release(76677)
-            asset = next(release.iter_assets())
+            asset = next(release.assets())
             _, filename = tempfile.mkstemp()
-            assert asset._session.auth is not None
+            assert asset.session.auth is not None
             asset.download(filename)
-            assert asset._session.auth is not None
+            assert asset.session.auth is not None
 
         with open(filename, 'rb') as fd:
             assert len(fd.read(1024)) > 0

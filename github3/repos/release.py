@@ -188,7 +188,7 @@ class Asset(GitHubCore):
             headers.update({
                 'Content-Type': None,
                 })
-            with self._session.no_auth():
+            with self.session.no_auth():
                 resp = self._get(resp.headers['location'], stream=True,
                                  headers=headers)
 

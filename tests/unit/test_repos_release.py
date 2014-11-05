@@ -1,6 +1,6 @@
 from github3.repos.release import Release, Asset
 
-from .helper import UnitHelper, UnitIteratorHelper, create_url_helper
+from .helper import UnitHelper, UnitIteratorHelper, create_url_helper, mock
 
 import json
 import pytest
@@ -98,7 +98,7 @@ class TestAsset(UnitHelper):
             self.instance.download()
 
         self.session.get.assert_called_once_with(
-            self.example_data['url'],
+            url_for('/assets/1'),
             stream=True,
             allow_redirects=False,
             headers={'Accept': 'application/octect-stream'}
