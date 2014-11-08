@@ -8,7 +8,7 @@ This module contains the class(es) related to Events
 """
 from __future__ import unicode_literals
 
-from .models import GitHubObject
+from .models import GitHubCore
 
 
 class Event(GitHubCore):
@@ -64,35 +64,35 @@ class Event(GitHubCore):
         return sorted(_payload_handlers.keys())
 
 
-def _commitcomment(payload):
+def _commitcomment(payload, session):
     from .repos.comment import RepoComment
     if payload.get('comment'):
         payload['comment'] = RepoComment(payload['comment'], session)
     return payload
 
 
-def _follow(payload):
+def _follow(payload, session):
     from .users import User
     if payload.get('target'):
         payload['target'] = User(payload['target'], session)
     return payload
 
 
-def _forkev(payload):
+def _forkev(payload, session):
     from .repos import Repository
     if payload.get('forkee'):
         payload['forkee'] = Repository(payload['forkee'], session)
     return payload
 
 
-def _gist(payload):
+def _gist(payload, session):
     from .gists import Gist
     if payload.get('gist'):
         payload['gist'] = Gist(payload['gist'], session)
     return payload
 
 
-def _issuecomm(payload):
+def _issuecomm(payload, session):
     from .issues import Issue
     from .issues.comment import IssueComment
     if payload.get('issue'):
@@ -102,21 +102,21 @@ def _issuecomm(payload):
     return payload
 
 
-def _issueevent(payload):
+def _issueevent(payload, session):
     from .issues import Issue
     if payload.get('issue'):
         payload['issue'] = Issue(payload['issue'], session)
     return payload
 
 
-def _member(payload):
+def _member(payload, session):
     from .users import User
     if payload.get('member'):
         payload['member'] = User(payload['member'], session)
     return payload
 
 
-def _pullreqev(payload):
+def _pullreqev(payload, session):
     from .pulls import PullRequest
     if payload.get('pull_request'):
         payload['pull_request'] = PullRequest(payload['pull_request'],
@@ -124,21 +124,21 @@ def _pullreqev(payload):
     return payload
 
 
-def _pullreqcomm(payload):
+def _pullreqcomm(payload, session):
     from .pulls import PullRequest, ReviewComment
     # Transform the Pull Request attribute
     pull = payload.get('pull_request')
     if pull:
-        payload['pull_request'] = PullRequest(pull)
+        payload['pull_request'] = PullRequest(pull, session)
 
     # Transform the Comment attribute
     comment = payload.get('comment')
     if comment:
-        payload['comment'] = ReviewComment(comment, None)
+        payload['comment'] = ReviewComment(comment, session)
     return payload
 
 
-def _release(payload):
+def _release(payload, session):
     from .repos.release import Release
     release = payload.get('release')
     if release:
@@ -146,16 +146,16 @@ def _release(payload):
     return payload
 
 
-def _team(payload):
+def _team(payload, session):
     from .orgs import Team
     from .repos import Repository
     from .users import User
     if payload.get('team'):
         payload['team'] = Team(payload['team'], session)
     if payload.get('repo'):
-        payload['repo'] = Repository(payload['repo'], None)
+        payload['repo'] = Repository(payload['repo'], session)
     if payload.get('sender'):
-        payload['sender'] = User(payload['sender'], None)
+        payload['sender'] = User(payload['sender'], session)
     return payload
 
 
