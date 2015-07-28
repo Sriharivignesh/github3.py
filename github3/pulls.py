@@ -215,9 +215,7 @@ class PullRequest(models.GitHubCore):
         :param str body: (required), comment body
         :returns: :class:`IssueComment <github3.issues.comment.IssueComment>`
         """
-        response = self._get(self.issue_url)
-        json = self._json(response, 200)
-        issue = self._instance_or_null(Issue, json)
+        issue = self.issue()
         return issue.create_comment(body)
 
     @requires_auth
@@ -256,17 +254,13 @@ class PullRequest(models.GitHubCore):
         url = self._build_url('merge', base_url=self._api)
         return self._boolean(self._get(url), 204, 404)
 
-    def review_comments(self, number=-1, etag=None):
-        r"""Iterate over the review comments on this pull request.
+    def issue(self):
+        """Retrieve the issue associated with this pull request.
 
-        :param int number: (optional), number of comments to return. Default:
-            -1 returns all available comments.
-        :param str etag: (optional), ETag from a previous request to the same
-            endpoint
-        :returns: generator of :class:`ReviewComment <ReviewComment>`\ s
+        :returns: :class:`~github3.issues.Issue`
         """
-        url = self._build_url('comments', base_url=self._api)
-        return self._iter(int(number), url, ReviewComment, etag=etag)
+        json = self._json(self._get(self.issue_url), 200)
+        return self._instance_or_null(Issue, json)
 
     def commits(self, number=-1, etag=None):
         r"""Iterate over the commits on this pull request.
