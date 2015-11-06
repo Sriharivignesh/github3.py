@@ -107,4 +107,4 @@ Contributors
 
 - Matt Chung (@itsmemattchung)
 
-- Martin Ek (@ekmartin)
+- Bastien Gandouet (@b4stien)
