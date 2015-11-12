@@ -108,3 +108,7 @@ Contributors
 - Matt Chung (@itsmemattchung)
 
 - Chris Thompson (@notyetsecure)
+
+- Bastien Gandouet (@b4stien)
+
+- Usman Ehtesham Gul (@ueg1990)
