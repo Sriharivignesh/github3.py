@@ -1,9 +1,16 @@
 .. vim: set tw=100
 
-History/Changelog
------------------
+0.9.3: 2014-11-04
+~~~~~~~~~~~~~~~~~
 
-.. include:: ./LATEST_VERSION_NOTES.rst
+- Backport of ``PullRequest#create_review_comment`` by Adrian Moisey
+
+- Backport of ``PullRequest#review_comments`` by Adrian Moisey
+
+- Backport of a fix that allows authenticated users to download Release
+  Assets. Original bug reported by Eugene Fidelin in issue #288.
+
+- Documentation typo fix by Marc Abramowitz
 
 0.9.2: 2014-10-05
 ~~~~~~~~~~~~~~~~~
