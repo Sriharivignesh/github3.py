@@ -139,4 +139,5 @@ Contributors
 
 - Gabi Davar (@mindw)
 
-- David Prothero (@dprothero)
+- Björn Kautler (@Vampire)
+
