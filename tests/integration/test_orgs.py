@@ -127,6 +127,7 @@ class TestOrganization(IntegrationHelper):
 
             for event in o.events():
                 assert isinstance(event, github3.events.Event)
+                assert isinstance(event.as_json(), str)
 
     def test_public_events(self):
         """Test retrieving an organization's public event stream."""
