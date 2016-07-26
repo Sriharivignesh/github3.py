@@ -205,7 +205,7 @@ class GitHubCore(object):
         if not json:
             return NullObject(instance_class.__name__)
         if not isinstance(json, dict):
-            return exceptions.UnprocessableResponseBody(
+            raise exceptions.UnprocessableResponseBody(
                 "GitHub's API returned a body that could not be handled", json
             )
         try:
