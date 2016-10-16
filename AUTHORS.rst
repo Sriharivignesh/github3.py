@@ -132,3 +132,9 @@ Contributors
 - Evan Borgstrom (@borgstrom)
 
 - Goodwillcoding (@goodwillcoding)
+
+- Andreas Backx (@AndreasBackx)
+
+- Alexander Koshelev <daevaorn@gmail.com>
+
+- Gabi Davar (@mindw)
