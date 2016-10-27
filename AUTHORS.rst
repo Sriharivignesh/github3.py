@@ -130,3 +130,5 @@ Contributors
 - Billy Keyes (@bluekeyes)
 
 - Evan Borgstrom (@borgstrom)
+
+- Jordan Moldow (@jmoldow)
