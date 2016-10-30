@@ -131,4 +131,4 @@ Contributors
 
 - Evan Borgstrom (@borgstrom)
 
-- Jordan Moldow (@jmoldow)
+- Goodwillcoding (@goodwillcoding)
