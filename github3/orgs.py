@@ -45,8 +45,9 @@ class Team(GitHubCore):
         self._api = self._get_attribute(team, 'url')
 
         #: This team's name.
-        self.name = self._get_attribute(team, 'name')
-
+        self.name = team.get('name')
+        #: This team's slug.
+        self.slug = team.get('slug')
         #: Unique ID of the team.
         self.id = self._get_attribute(team, 'id')
 
