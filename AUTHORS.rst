@@ -138,3 +138,5 @@ Contributors
 - Alexander Koshelev <daevaorn@gmail.com>
 
 - Gabi Davar (@mindw)
+
+- David Prothero (@dprothero)
