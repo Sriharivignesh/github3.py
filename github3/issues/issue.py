@@ -38,10 +38,8 @@ class Issue(GitHubCore):
 
         #: :class:`User <github3.users.User>` representing the user the issue
         #: was assigned to.
-        self.assignee = issue.get('assignee')
-        if self.assignee:
-            self.assignee = User(issue.get('assignee'), self)
-        self.assignees = issue.get('assignees')
+        self.assignee = self._class_attribute(issue, 'assignee', User, self)
+        self.assignees = self._get_attribute(issue, 'assignees')
         if self.assignees:
             self.assignees = [
                 User(assignee) for assignee in self.assignees
@@ -80,7 +78,7 @@ class Issue(GitHubCore):
         #: Returns the list of :class:`Label <github3.issues.label.Label>`\ s
         #: on this issue.
         self.original_labels = self._get_attribute(issue, 'labels', [])
-        if self.original_labels and self.original_labels is not self.Empty:
+        if self.original_labels:
             self.original_labels = [
                 Label(l, self) for l in self.original_labels
             ]
@@ -105,8 +103,8 @@ class Issue(GitHubCore):
         self.pull_request_urls = self._get_attribute(issue, 'pull_request', {})
 
         #: Returns ('owner', 'repository') this issue was filed on.
-        self.repository = self.Empty
-        if self.html_url and self.html_url is not self.Empty:
+        self.repository = None
+        if self.html_url:
             m = match('https?://[\w\d\-\.\:]+/(\S+)/(\S+)/(?:issues|pull)/\d+',
                       self.html_url)
             self.repository = m.groups()
